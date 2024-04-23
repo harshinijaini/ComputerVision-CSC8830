@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload new File</title>
+    <style>
+       
+        *, *:before, *:after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #e9ecef; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; 
+            color: #495057; 
+            line-height: 1.5; 
+        }
+
+       
+        form {
+            width: 90%; 
+            max-width: 400px;
+            padding: 2rem; 
+            background: #ffffff; 
+            border-radius: 0.5rem; 
+            box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,0.05); 
+            text-align: center; 
+        }
+
+       
+        h1 {
+            margin-bottom: 1rem; 
+            font-size: 1.75rem; 
+        }
+
+       
+        input[type="file"] {
+            width: calc(100% - 20px); 
+            padding: 10px; 
+            margin-bottom: 1rem; 
+            border: 2px solid #ced4da; 
+            border-radius: 0.25rem; 
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; 
+        }
+
+        
+        input[type="file"]:focus {
+            border-color: #80bdff; 
+            outline: 0; 
+            box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25); 
+        }
+
+       
+        input[type="submit"] {
+            font-size: 1.1rem; 
+            font-weight: 400; 
+            color: white; 
+            background-color: #007bff; 
+            border: none; 
+            border-radius: 0.25rem; 
+            padding: 10px; 
+            width: 100%; 
+            cursor: pointer; 
+            transition: background-color 0.15s ease-in-out; 
+        }
+
+     
+        input[type="submit"]:hover, input[type="submit"]:focus {
+            background-color: #0056b3; 
+        }
+    </style>
+</head>
+<body>
+    <form method="post" enctype="multipart/form-data">
+        <h1>Upload an image to integral</h1>
+        <input type="file" name="file">
+        <input type="submit" value="Upload">
+    </form>
+</body>
+</html>
