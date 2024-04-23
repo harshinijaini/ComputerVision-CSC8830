@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
+from werkzeug.datastructures import ImmutableMultiDict
 import os
 from PIL import Image
 import cv2
@@ -143,7 +144,7 @@ def process_image_stitching(image_path):
         def select_good_matches(matches):
             good_matches = []
             for m, n in matches:
-                if m.distance < 0.5 * n.distance:
+                if m.distance < 0.75 * n.distance:
                     good_matches.append(m)
             good_matches = np.asarray(good_matches)
             return good_matches
@@ -175,19 +176,18 @@ def process_image_stitching(image_path):
         # Combine both images
         stitched_image = warped_image.copy()
         stitched_image[0:image2.shape[0], 0:image2.shape[1]] = image2
-        
+    
         return stitched_image
 
     NUM_OF_IMAGES = 3
     images=[]
     for i in range(NUM_OF_IMAGES):
-        images.append(cv2.imread("pan-images/test/img"+str(i+1)+".jpeg"))
+        images.append(cv2.imread(UPLOAD_FOLDER+"pan_images/img"+str(i+1)+".jpeg"))
 
     stitched_image = images[0]    
     for i in range(1,len(images)):
         images_to_stitch=[stitched_image, images[i]]
         stitched_image = pan_image_stitch(images_to_stitch)
-    # cv2.imwrite('stitched_image.jpg',stitched_image)
     cv2.imwrite(UPLOAD_FOLDER+'stitching_' + os.path.basename(image_path), stitched_image)
     return (UPLOAD_FOLDER+'stitching_' + os.path.basename(image_path))
 
@@ -247,6 +247,14 @@ def stitching_upload_file():
             return redirect(request.url)
         print("PRINTING HERE")
         print(request.files)
+        imageData = ImmutableMultiDict(request.files)
+        print(request.files.getlist('image'))
+        print(imageData)
+        print(imageData.getlist('input'))
+        for item in request.files.getlist('image'):
+            print("HERE")
+            data = item.read()
+            print('len:', len(data))
         file = request.files['file']
         # file_2 = request.files['file_2']
         # file_3 = request.files['file_3']
